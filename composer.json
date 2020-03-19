@@ -1,0 +1,10 @@
+{
+    "name": "raffi/sharedcountphptest",
+    "authors": [
+        {
+            "name": "ft-rockstar",
+            "email": "rockstar@fluxtechs.com"
+        }
+    ],
+    "require": {}
+}
