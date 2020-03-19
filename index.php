@@ -5,7 +5,6 @@ class Sharedcount {
 
     function __construct($apiToken) {
         $this->setApiToken($apiToken);
-        $this->curl = curl_init();
     }
    
     function setApiToken($apiToken) {
@@ -13,7 +12,8 @@ class Sharedcount {
     }
 
     function getQuota($urlToCheck) {
-        curl_setopt_array($this->curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.sharedcount.com/v1.0?apikey=" . $this->apiToken . "&url=" . $urlToCheck,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -24,14 +24,15 @@ class Sharedcount {
             CURLOPT_CUSTOMREQUEST => "GET",
         ));
 
-        $response = curl_exec($this->curl);
-        curl_close($this->curl);
+        $response = curl_exec($curl);
+        curl_close($curl);
         return json_decode($response, true);
     }
 
     function getBulkId($urlArray) {
+        $curl = curl_init();
         $urlArray = implode("\n",$urlArray);
-        curl_setopt_array($this->curl, array(
+        curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.sharedcount.com/v1.0/bulk?apikey=" . $this->apiToken,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -46,13 +47,14 @@ class Sharedcount {
             ),
         ));
 
-        $response = curl_exec($this->curl);
-        curl_close($this->curl);
+        $response = curl_exec($curl);
+        curl_close($curl);
         return json_decode($response, true);
     }
 
     function getBulkQuota($bulkId) {
-        curl_setopt_array($this->curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.sharedcount.com/v1.0/bulk?apikey=" . $this->apiToken . "&bulk_id=" . $bulkId,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -63,8 +65,9 @@ class Sharedcount {
             CURLOPT_CUSTOMREQUEST => "GET",
         ));
 
-        $response = curl_exec($this->curl);
-        curl_close($this->curl);
+        $response = curl_exec($curl);
+        curl_close($curl);
         return json_decode($response, true);
     }
 }
+
